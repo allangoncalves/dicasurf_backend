@@ -65,3 +65,15 @@ class WaveDirection(models.Model):
     right = models.BooleanField(default=False)
     left = models.BooleanField(default=False)
     spot = models.ForeignKey(Spot, related_name='wave_directions', on_delete=models.CASCADE)
+
+class SurfLevelNeeded(models.Model):
+    beginner = models.BooleanField(default=False)
+    intermediate = models.BooleanField(default=False)
+    expert = models.BooleanField(default=False)
+    spot = models.ForeignKey(Spot, related_name='surf_levels', on_delete=models.CASCADE)
+
+class WaveFrequency(models.Model):
+    low = models.BooleanField(default=False)
+    regular = models.BooleanField(default=False)
+    high = models.BooleanField(default=False)
+    spot = models.ForeignKey(Spot, related_name='wave_frequencies', on_delete=models.CASCADE)
