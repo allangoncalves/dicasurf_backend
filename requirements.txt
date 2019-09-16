@@ -1,4 +1,5 @@
 Django==2.2.3
+django-cors-headers==3.1.0
 djangorestframework==3.10.2
 drf-nested-routers==0.91
 pytz==2019.1
