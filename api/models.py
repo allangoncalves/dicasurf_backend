@@ -3,25 +3,37 @@ from django.db import models
 # Create your models here.
 
 BEACH_TYPE = (
-    ('public', 'Pública'),
-    ('private', 'Privada'),
+    ('Pública', 'Pública'),
+    ('Privada', 'Privada'),
 )
 
 CROWDS = (
-    ('few', 'Poucos Surfistas'),
-    ('many', 'Muitos Surfistas'),
+    ('Poucos Surfistas', 'Poucos Surfistas'),
+    ('Muitos Surfistas', 'Muitos Surfistas'),
 )
 
 WAVE_LENGTHS = (
-    ('short', 'Curta'),
-    ('long', 'Longa'),
-    ('normal', 'Normal'),
+    ('Curta', 'Curta'),
+    ('Longa', 'Longa'),
+    ('Normal', 'Normal'),
 )
 
 WAVE_STRENGTH = (
-    ('powerful', 'Potente'),
-    ('soft', 'Suave'),
+    ('Potente', 'Potente'),
+    ('Suave', 'Suave'),
 )
+
+class Dangers(models.Model):
+    current = models.BooleanField(default=False)
+    localism = models.BooleanField(default=False)
+    boat = models.BooleanField(default=False)
+    jetski = models.BooleanField(default=False)
+    buoy = models.BooleanField(default=False)
+    pollution = models.BooleanField(default=False)
+    rock = models.BooleanField(default=False)
+    shark = models.BooleanField(default=False)
+    undertow = models.BooleanField(default=False)
+    other = models.CharField(max_length=220, default="", blank=True)
 
 class AccessPoint(models.Model):
     stairwell = models.BooleanField(default=False)
@@ -57,9 +69,10 @@ class WaveFrequency(models.Model):
 
 class State(models.Model):
     name = models.CharField(max_length=100, blank=False)
+    abbreviation = models.CharField(max_length=2, blank=False)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.name} - {self.abbreviation}'
 
 class City(models.Model):
     name = models.CharField(max_length=100, blank=False)
@@ -70,6 +83,8 @@ class City(models.Model):
 
 class Spot(models.Model):
     name = models.CharField(max_length=100, blank=False)
+    lat = models.FloatField()
+    lng = models.FloatField()
     car = models.BooleanField(default=False)
     city = models.ForeignKey(City, related_name="spots", on_delete=models.CASCADE)
     special_access = models.BooleanField(default=False)
@@ -88,6 +103,7 @@ class Spot(models.Model):
     wave_directions = models.OneToOneField(WaveDirection, on_delete=models.CASCADE)
     surf_levels = models.OneToOneField(SurfLevelNeeded, on_delete=models.CASCADE)
     wave_frequencies = models.OneToOneField(WaveFrequency, on_delete=models.CASCADE)
+    dangers = models.OneToOneField(Dangers, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

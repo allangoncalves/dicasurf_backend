@@ -1,6 +1,11 @@
 from rest_framework import serializers
 from api.models import *
 
+class DangersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Dangers
+        exclude = ('id',)
+
 class AccessPointSerializer(serializers.ModelSerializer):
     class Meta:
         model = AccessPoint
@@ -38,6 +43,7 @@ class SpotSerializer(serializers.ModelSerializer):
     wave_directions = WaveDirectionSerializer()
     surf_levels = SurfLevelNeededSerializer()
     wave_frequencies = WaveFrequencySerializer()
+    dangers = DangersSerializer()
 
     class Meta:
         model = Spot
@@ -56,6 +62,8 @@ class SpotSerializer(serializers.ModelSerializer):
         surf_levels = SurfLevelNeeded.objects.create(**surf_levels_data)
         wave_frequencies_data = validated_data.pop('wave_frequencies')
         wave_frequencies = WaveFrequency.objects.create(**wave_frequencies_data)
+        dangers_data = validated_data.pop('dangers')
+        dangers = Dangers.objects.create(**dangers_data)
 
         spot = Spot.objects.create(
             accesses=accesses,
@@ -64,6 +72,7 @@ class SpotSerializer(serializers.ModelSerializer):
             wave_directions=wave_directions,
             surf_levels=surf_levels,
             wave_frequencies=wave_frequencies,
+            dangers=dangers,
             **validated_data
         )
         return spot
