@@ -23,88 +23,98 @@ WAVE_STRENGTH = (
     ('Suave', 'Suave'),
 )
 
-class Dangers(models.Model):
-    current = models.BooleanField(default=False)
-    localism = models.BooleanField(default=False)
-    boat = models.BooleanField(default=False)
-    jetski = models.BooleanField(default=False)
-    buoy = models.BooleanField(default=False)
-    pollution = models.BooleanField(default=False)
-    rock = models.BooleanField(default=False)
-    shark = models.BooleanField(default=False)
-    undertow = models.BooleanField(default=False)
-    other = models.CharField(max_length=220, default="", blank=True)
-
-class AccessPoint(models.Model):
-    stairwell = models.BooleanField(default=False)
-    cliff = models.BooleanField(default=False)
-    bay = models.BooleanField(default=False)
-    trail = models.BooleanField(default=False)
-    other = models.CharField(max_length=220, default="", blank=True)
-
-class GroundPoint(models.Model):
-    rock = models.BooleanField(default=False)
-    sand = models.BooleanField(default=False)
-    coral = models.BooleanField(default=False)
-
-class BestTideMoves(models.Model):
-    low = models.BooleanField(default=False)
-    high = models.BooleanField(default=False)
-    ebb = models.BooleanField(default=False)
-    flood = models.BooleanField(default=False)
-
-class WaveDirection(models.Model):
-    right = models.BooleanField(default=False)
-    left = models.BooleanField(default=False)
-
-class SurfLevelNeeded(models.Model):
-    beginner = models.BooleanField(default=False)
-    intermediate = models.BooleanField(default=False)
-    expert = models.BooleanField(default=False)
-
-class WaveFrequency(models.Model):
-    low = models.BooleanField(default=False)
-    regular = models.BooleanField(default=False)
-    high = models.BooleanField(default=False)
+SEX = (
+    ('Masculino', 'Masculino'),
+    ('Feminino', 'Feminino')
+)
 
 class State(models.Model):
-    name = models.CharField(max_length=100, blank=False)
-    abbreviation = models.CharField(max_length=2, blank=False)
+    name = models.CharField("Nome do estado", max_length=100, blank=False)
+    abbreviation = models.CharField("Sigla do estado", max_length=2, blank=False)
+
+    class Meta:
+        verbose_name = "Estado"
+        verbose_name_plural = "Estados"
 
     def __str__(self):
         return f'{self.name} - {self.abbreviation}'
 
 class City(models.Model):
-    name = models.CharField(max_length=100, blank=False)
-    state = models.ForeignKey(State, related_name="cities", on_delete=models.CASCADE)
+    name = models.CharField("Nome da cidade", max_length=100, blank=False)
+    state = models.ForeignKey(State, related_name="cities", on_delete=models.CASCADE, verbose_name="Estado",)
+
+    class Meta:
+        verbose_name = "Cidade"
+        verbose_name_plural = "Cidades"
 
     def __str__(self):
         return f'{self.name}'
 
 class Spot(models.Model):
-    name = models.CharField(max_length=100, blank=False)
-    lat = models.FloatField()
-    lng = models.FloatField()
-    car = models.BooleanField(default=False)
-    city = models.ForeignKey(City, related_name="spots", on_delete=models.CASCADE)
-    special_access = models.BooleanField(default=False)
-    beach_type = models.CharField(max_length=100, choices=BEACH_TYPE)
-    access_comment = models.TextField()
-    time_of_year = models.TextField()
-    good_day_description = models.TextField()
-    week_crowd = models.CharField(max_length=50, blank=False, choices=CROWDS)
-    weekend_crowd = models.CharField(max_length=50, blank=False, choices=CROWDS)
-    wave_quality = models.IntegerField()
-    wave_length = models.CharField(max_length=10, blank=False, choices=WAVE_LENGTHS)
-    wave_strength = models.CharField(max_length=10, blank=False, choices=WAVE_STRENGTH)
-    accesses = models.OneToOneField(AccessPoint, on_delete=models.CASCADE)
-    grounds = models.OneToOneField(GroundPoint, on_delete=models.CASCADE)
-    best_tide_moves = models.OneToOneField(BestTideMoves, on_delete=models.CASCADE)
-    wave_directions = models.OneToOneField(WaveDirection, on_delete=models.CASCADE)
-    surf_levels = models.OneToOneField(SurfLevelNeeded, on_delete=models.CASCADE)
-    wave_frequencies = models.OneToOneField(WaveFrequency, on_delete=models.CASCADE)
-    dangers = models.OneToOneField(Dangers, on_delete=models.CASCADE)
+    # General info
+    name = models.CharField("Nome", max_length=100, blank=False)
+    city = models.ForeignKey(City, related_name="spots", on_delete=models.CASCADE, verbose_name="Cidade",)
+    # Coordinates
+    lat = models.FloatField("Latitude")
+    lng = models.FloatField("Longitude")
+    # Accessibility
+    car = models.BooleanField("Acesso de carro", default=False)
+    special_access = models.BooleanField("Acesso especial", default=False)
+    beach_type = models.CharField("Tipo de praia", max_length=100, choices=BEACH_TYPE)
+    # Comments
+    time_of_year = models.TextField("Melhor época do ano")
+    good_day_description = models.TextField("Dia bom")
+    access_comment = models.TextField("Comentário sobre o acesso")
+    # Crowd
+    week_crowd = models.CharField("Crowd na semana", max_length=50, blank=False, choices=CROWDS)
+    weekend_crowd = models.CharField("Crowd no final de semana", max_length=50, blank=False, choices=CROWDS)
+    # Wave info
+    wave_quality = models.IntegerField("Qualidade das ondas")
+    wave_length = models.CharField("Comprimento da onda", max_length=10, blank=False, choices=WAVE_LENGTHS)
+    wave_strength = models.CharField("Força", max_length=10, blank=False, choices=WAVE_STRENGTH)
+    # Acessess
+    stairwell = models.BooleanField("Escadaria", default=False)
+    cliff = models.BooleanField("Falésia", default=False)
+    bay = models.BooleanField("Beira Mar", default=False)
+    trail = models.BooleanField("Trilha", default=False)
+    other_accesses = models.CharField("Outros acessos", max_length=220, default="", blank=True)
+    # Grounds
+    rock = models.BooleanField("Pedra", default=False)
+    sand = models.BooleanField("Areia", default=False)
+    coral = models.BooleanField("Coral", default=False)
+    # Best tide moves
+    low = models.BooleanField("Seca", default=False)
+    high = models.BooleanField("Cheia", default=False)
+    ebb = models.BooleanField("Secando", default=False)
+    flood = models.BooleanField("Enchendo", default=False)
+    # Wave directions
+    right = models.BooleanField("Direita", default=False)
+    left = models.BooleanField("Esquerda", default=False)
+    # Surf Levels
+    beginner = models.BooleanField("Iniciante", default=False)
+    intermediate = models.BooleanField("Intermediário", default=False)
+    expert = models.BooleanField("Experiente", default=False)
+    # Wave frequency
+    low_frequency = models.BooleanField("Frequência baixa", default=False)
+    regular_frequency = models.BooleanField("Frequência regular", default=False)
+    high_frequency = models.BooleanField("Frequência alta", default=False)
+    # Dangers
+    current = models.BooleanField("Correnteza", default=False)
+    localism = models.BooleanField("Localismo", default=False)
+    boat = models.BooleanField("Barcos", default=False)
+    jetski = models.BooleanField("Jet Ski", default=False)
+    buoy = models.BooleanField("Bóias", default=False)
+    pollution = models.BooleanField("Poluição", default=False)
+    rocks = models.BooleanField("Pedras", default=False)
+    shark = models.BooleanField("Tubarões", default=False)
+    undertow = models.BooleanField("Ressaca", default=False)
+    other_dangers = models.CharField("Outros perigos", max_length=220, default="", blank=True)
+    # 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Pico"
+        verbose_name_plural = "Picos"
 
     def __str__(self):
         return f'{self.name}'

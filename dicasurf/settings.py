@@ -25,9 +25,9 @@ SECRET_KEY = 'z2c05ilg$#k#a3ct$jp_=)(=)3(smy@-tinq#!5rxdg8-608-f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOW_CREDENTIALS = True
+ALLOWED_HOSTS = ['192.168.0.10', '10.7.127.4', 'localhost']
 
 # Application definition
 
@@ -108,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'UTC'
 
