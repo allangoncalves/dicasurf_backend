@@ -23,11 +23,6 @@ WAVE_STRENGTH = (
     ('Suave', 'Suave'),
 )
 
-SEX = (
-    ('Masculino', 'Masculino'),
-    ('Feminino', 'Feminino')
-)
-
 class State(models.Model):
     name = models.CharField("Nome do estado", max_length=100, blank=False)
     abbreviation = models.CharField("Sigla do estado", max_length=2, blank=False)
