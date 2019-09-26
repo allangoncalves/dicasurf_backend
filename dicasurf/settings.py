@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
     'rest_auth',
+    'collectfast',
 ]
 
 REST_FRAMEWORK = {
