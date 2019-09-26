@@ -1,7 +1,14 @@
 from rest_framework import serializers
 from api.models import *
 
+class VideoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Video
+        exclude = ('spot',)
+
 class SpotSerializer(serializers.ModelSerializer):
+    videos = VideoSerializer(read_only=True, many=True)
 
     class Meta:
         model = Spot

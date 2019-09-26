@@ -6,11 +6,15 @@ from api.models import *
 
 admin.site.site_header = "DicaSurf Admin"
 
+class VideoInline(admin.StackedInline):
+    model = Video
+
 class SpotAdmin(admin.ModelAdmin):
     list_filter = ('city__name',)
+    inlines = [VideoInline]
     fieldsets = (
         ('Informações gerais', {
-            'fields': ('name', 'city'),
+            'fields': ('name', 'city', 'header_image', 'info_image'),
             'classes': ['collapse']
         }),
         ('Coordenadas', {
@@ -25,18 +29,6 @@ class SpotAdmin(admin.ModelAdmin):
             'fields': (('stairwell', 'cliff', 'bay', 'trail'), 'other_accesses',),
             'classes': ['collapse']
         }),
-        ('Comentários', {
-            'fields': ('time_of_year', 'good_day_description', 'access_comment'),
-            'classes': ['collapse']
-        }),
-        ('Crowd', {
-            'fields': ('week_crowd', 'weekend_crowd'),
-            'classes': ['collapse']
-        }),
-        ('Informações de onda', {
-            'fields': ('wave_quality', 'wave_length', 'wave_strength'),
-            'classes': ['collapse']
-        }),
         ('Fundos', {
             'fields': (('rock', 'sand', 'coral'),),
             'classes': ['collapse']
@@ -45,16 +37,12 @@ class SpotAdmin(admin.ModelAdmin):
             'fields': (('low', 'high', 'ebb', 'flood'),),
             'classes': ['collapse']
         }),
-        ('Direção das ondas', {
-            'fields': (('right', 'left'),),
+        ('Comentários', {
+            'fields': ('time_of_year', 'good_day_description', 'access_comment'),
             'classes': ['collapse']
         }),
-        ('Niveis de surf', {
-            'fields': (('beginner', 'intermediate', 'expert'),),
-            'classes': ['collapse']
-        }),
-        ('Frequência das ondas', {
-            'fields': (('low_frequency', 'regular_frequency', 'high_frequency'),),
+        ('Crowd', {
+            'fields': ('week_crowd', 'weekend_crowd'),
             'classes': ['collapse']
         }),
         ('Perigos', {
@@ -70,6 +58,22 @@ class SpotAdmin(admin.ModelAdmin):
                 'undertow',
                 'other_dangers',
             ),
+            'classes': ['collapse']
+        }),
+        ('Informações de onda', {
+            'fields': ('wave_quality', 'wave_length', 'wave_strength'),
+            'classes': ['collapse']
+        }),
+        ('Direção das ondas', {
+            'fields': (('right', 'left'),),
+            'classes': ['collapse']
+        }),
+        ('Niveis de surf', {
+            'fields': (('beginner', 'intermediate', 'expert'),),
+            'classes': ['collapse']
+        }),
+        ('Frequência das ondas', {
+            'fields': (('low_frequency', 'regular_frequency', 'high_frequency'),),
             'classes': ['collapse']
         }),
     )

@@ -49,6 +49,8 @@ class Spot(models.Model):
     # General info
     name = models.CharField("Nome", max_length=100, blank=False)
     city = models.ForeignKey(City, related_name="spots", on_delete=models.CASCADE, verbose_name="Cidade",)
+    header_image = models.ImageField("Imagem principal")
+    info_image = models.ImageField("Imagem lateral")
     # Coordinates
     lat = models.FloatField("Latitude")
     lng = models.FloatField("Longitude")
@@ -113,3 +115,17 @@ class Spot(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+
+class Video(models.Model):
+    spot = models.ForeignKey(Spot, related_name="videos", on_delete=models.CASCADE, verbose_name="Pico",)
+    title = models.CharField("Título breve", max_length=100, blank=False)
+    thumb = models.ImageField("Arquivo thumb")
+    youtube_url = models.URLField("Link do youtube")
+    
+    class Meta:
+        verbose_name = "Vídeo"
+        verbose_name_plural = "Vídeos"
+
+    def __str__(self):
+        return f'{self.spot.name} - {self.title}'
