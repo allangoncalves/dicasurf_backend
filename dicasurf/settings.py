@@ -23,18 +23,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'z2c05ilg$#k#a3ct$jp_=)(=)3(smy@-tinq#!5rxdg8-608-f'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
 AUTH_USER_MODEL = 'authentication.User'
 
-AWS_ACCESS_KEY_ID = 'AKIA6AGKU2TFBYW5F37X'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-AWS_STORAGE_BUCKET_NAME = 'dicasurf'
-AWS_S3_REGION_NAME = 'sa-east-1'
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME')
 AWS_DEFAULT_ACL = None
 
 STATICFILES_STORAGE = "sitemanager.storages.StaticRootS3Boto3Storage"
@@ -42,7 +42,6 @@ DEFAULT_FILE_STORAGE = "sitemanager.storages.MediaRootS3Boto3Storage"
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-ALLOWED_HOSTS = ['*']
 
 # Application definition
 
