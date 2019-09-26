@@ -28,9 +28,19 @@ DEBUG = True
 
 AUTH_USER_MODEL = 'authentication.User'
 
+AWS_ACCESS_KEY_ID = 'AKIA6AGKU2TFBYW5F37X'
+AWS_SECRET_ACCESS_KEY = '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'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_STORAGE_BUCKET_NAME = 'dicasurf'
+AWS_S3_REGION_NAME = 'sa-east-1'
+AWS_DEFAULT_ACL = None
+
+STATICFILES_STORAGE = "sitemanager.storages.StaticRootS3Boto3Storage"
+DEFAULT_FILE_STORAGE = "sitemanager.storages.MediaRootS3Boto3Storage"
+
 CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ALLOW_CREDENTIALS = True
-ALLOWED_HOSTS = ['192.168.0.10', '10.7.127.4', 'localhost']
+CORS_ALLOW_CREDENTIALS = True
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -44,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'authentication',
+    'sitemanager',
     'corsheaders',
     'rest_framework.authtoken',
     'rest_auth',
