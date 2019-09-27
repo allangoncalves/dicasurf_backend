@@ -25,3 +25,18 @@ class StateSerializer(serializers.ModelSerializer):
     class Meta:
         model = State
         fields = '__all__'
+
+class CityAndStateSerializer(serializers.ModelSerializer):
+    state = StateSerializer()
+
+    class Meta:
+        model = City
+        fields = "__all__"
+
+
+class SpotAndCitySerializer(serializers.ModelSerializer):
+    city = CityAndStateSerializer()
+
+    class Meta:
+        model = Spot
+        fields = "__all__"

@@ -4,6 +4,31 @@ from api.permissions import IsLoggedInUserOrAdmin, IsAdminUser
 from api.serializers import *
 
 # Create your views here.
+    
+    
+class ClosestSpotViewSet(viewsets.ModelViewSet):
+    serializer_class = SpotAndCitySerializer
+
+    def get_queryset(self):
+        lat = self.request.query_params.get("lat")
+        lng = self.request.query_params.get("lng")
+        """
+        Return objects sorted by distance to specified coordinates
+        which distance is less than max_distance given in kilometers
+        """
+        # Great circle distance formula
+        gcd_formula = "6371 * acos(least(greatest(\
+        cos(radians(%s)) * cos(radians(lat)) \
+        * cos(radians(lng) - radians(%s)) + \
+        sin(radians(%s)) * sin(radians(lat)) \
+        , -1), 1))"
+        distance_raw_sql = RawSQL(
+            gcd_formula,
+            (lat, lng, lat)
+        )
+        return Spot.objects.all() \
+        .annotate(distance=distance_raw_sql)\
+        .order_by('distance')
 
 class SpotViewSet(viewsets.ModelViewSet):
     serializer_class = SpotSerializer
