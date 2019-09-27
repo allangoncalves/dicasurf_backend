@@ -81,4 +81,5 @@ class SpotAdmin(admin.ModelAdmin):
 admin.site.register(State)
 admin.site.register(City)
 admin.site.register(Spot, SpotAdmin)
+admin.site.register(Post)
 

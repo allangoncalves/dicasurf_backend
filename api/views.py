@@ -39,6 +39,20 @@ class NearestSpotViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
 
+class PostViewSet(views.ModelViewSet):
+    serializer_class = PostSerializer
+    
+    def get_queryset(self):
+        return Post.objects.all().order_by('-created_at')
+
+    def get_permissions(self):
+        permission_classes = []
+        if self.action == 'retrieve' or self.action == 'list':
+            permission_classes = [AllowAny]
+        elif self.action == 'create' or self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
+
 class SpotViewSet(viewsets.ModelViewSet):
     serializer_class = SpotSerializer
 

@@ -5,7 +5,9 @@ from api.views import CityViewSet, SpotViewSet, StateViewSet, NearestSpotViewSet
 
 router = SimpleRouter()
 router.register(r'states', StateViewSet)
+router.register(r'posts', PostViewSet, base_name="posts")
 router.register(r'nearest', NearestSpotViewSet, base_name="nearest")
+
 
 state_router = routers.NestedDefaultRouter(router, r'states', lookup="state")
 state_router.register(r'cities', CityViewSet, base_name="state-cities")

@@ -23,6 +23,12 @@ WAVE_STRENGTH = (
     ('Suave', 'Suave'),
 )
 
+class Post(models.Model):
+    title = models.CharField("Título", max_length=140, blank=False)
+    text = models.TextField("Texto")
+    image = models.ImageField("Imagem")
+    created_at = models.DateTimeField(auto_now_add=True)
+
 class State(models.Model):
     name = models.CharField("Nome do estado", max_length=100, blank=False)
     abbreviation = models.CharField("Sigla do estado", max_length=2, blank=False)
@@ -115,7 +121,6 @@ class Spot(models.Model):
 
     def __str__(self):
         return f'{self.name}'
-
 
 class Video(models.Model):
     spot = models.ForeignKey(Spot, related_name="videos", on_delete=models.CASCADE, verbose_name="Pico",)
