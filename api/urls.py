@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 from rest_framework_nested import routers
 from rest_framework.routers import SimpleRouter
-from api.views import CityViewSet, SpotViewSet, StateViewSet, NearestSpotViewSet
+from api.views import CityViewSet, SpotViewSet, StateViewSet, NearestSpotViewSet, PostViewSet
 
 router = SimpleRouter()
 router.register(r'states', StateViewSet)
