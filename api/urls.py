@@ -1,11 +1,11 @@
 from django.conf.urls import url, include
 from rest_framework_nested import routers
 from rest_framework.routers import SimpleRouter
-from api.views import CityViewSet, SpotViewSet, StateViewSet, ClosestSpotViewSet
+from api.views import CityViewSet, SpotViewSet, StateViewSet, NearestSpotViewSet
 
 router = SimpleRouter()
 router.register(r'states', StateViewSet)
-router.register(r'closest', ClosestSpotViewSet, base_name="closest")
+router.register(r'nearest', NearestSpotViewSet, base_name="nearest")
 
 state_router = routers.NestedDefaultRouter(router, r'states', lookup="state")
 state_router.register(r'cities', CityViewSet, base_name="state-cities")

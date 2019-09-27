@@ -6,12 +6,12 @@ from api.serializers import *
 # Create your views here.
     
     
-class ClosestSpotViewSet(viewsets.ModelViewSet):
+class NearestSpotViewSet(viewsets.ModelViewSet):
     serializer_class = SpotAndCitySerializer
 
     def get_queryset(self):
-        lat = self.request.query_params.get("lat")
-        lng = self.request.query_params.get("lng")
+        lat = self.request.query_params.get("lat", 0)
+        lng = self.request.query_params.get("lng", 0)
         """
         Return objects sorted by distance to specified coordinates
         which distance is less than max_distance given in kilometers
@@ -29,6 +29,14 @@ class ClosestSpotViewSet(viewsets.ModelViewSet):
         return Spot.objects.all() \
         .annotate(distance=distance_raw_sql)\
         .order_by('distance')
+
+    def get_permissions(self):
+        permission_classes = []
+        if self.action == 'retrieve' or self.action == 'list':
+            permission_classes = [AllowAny]
+        elif self.action == 'create' or self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
 
 class SpotViewSet(viewsets.ModelViewSet):
     serializer_class = SpotSerializer
