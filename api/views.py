@@ -39,7 +39,7 @@ class NearestSpotViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
 
-class PostViewSet(views.ModelViewSet):
+class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     
     def get_queryset(self):
