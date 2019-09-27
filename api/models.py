@@ -26,6 +26,7 @@ WAVE_STRENGTH = (
 class Post(models.Model):
     title = models.CharField("Título", max_length=140, blank=False)
     text = models.TextField("Texto")
+    preview_text = models.CharField(max_length=300, blank=False)
     image = models.ImageField("Imagem")
     created_at = models.DateTimeField(auto_now_add=True)
 
