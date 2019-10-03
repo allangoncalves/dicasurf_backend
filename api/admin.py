@@ -11,39 +11,45 @@ class VideoInline(admin.StackedInline):
 
 class SpotAdmin(admin.ModelAdmin):
     list_filter = ('city__name',)
-    inlines = [VideoInline]
     fieldsets = (
-        ('Informações gerais', {
-            'fields': ('name', 'city', 'header_image', 'info_image'),
-            'classes': ['collapse']
+
+        ('Cidade', {
+            'fields': ('city',),
+        }),
+        ('Informaçōes Gerais', {
+            'fields': ('name',),
         }),
         ('Coordenadas', {
-            'fields': ('lat', 'lng'),
-            'classes': ['collapse']
+            'fields': ('lat', 'lng',),
+        }),
+    )
+
+class SpotDetailAdmin(admin.ModelAdmin):
+    inlines = [VideoInline]
+    fieldsets = (
+        ('Pico', {
+            'fields': ('spot',),
+        }),
+        ('Imagens para a pagina.', {
+            'fields': ('header_image', 'info_image'),
         }),
         ('Acessibilidade', {
             'fields': ('beach_type', ('car', 'special_access')),
-            'classes': ['collapse']
         }),
         ('Acessos', {
             'fields': (('stairwell', 'cliff', 'bay', 'trail'), 'other_accesses',),
-            'classes': ['collapse']
         }),
         ('Fundos', {
             'fields': (('rock', 'sand', 'coral'),),
-            'classes': ['collapse']
         }),
         ('Melhores movimentos da maré', {
             'fields': (('low', 'high', 'ebb', 'flood'),),
-            'classes': ['collapse']
         }),
         ('Comentários', {
             'fields': ('time_of_year', 'good_day_description', 'access_comment'),
-            'classes': ['collapse']
         }),
         ('Crowd', {
             'fields': ('week_crowd', 'weekend_crowd'),
-            'classes': ['collapse']
         }),
         ('Perigos', {
             'fields': (
@@ -58,28 +64,24 @@ class SpotAdmin(admin.ModelAdmin):
                 'undertow',
                 'other_dangers',
             ),
-            'classes': ['collapse']
         }),
         ('Informações de onda', {
             'fields': ('wave_quality', 'wave_length', 'wave_strength'),
-            'classes': ['collapse']
         }),
         ('Direção das ondas', {
             'fields': (('right', 'left'),),
-            'classes': ['collapse']
         }),
         ('Niveis de surf', {
             'fields': (('beginner', 'intermediate', 'expert'),),
-            'classes': ['collapse']
         }),
         ('Frequência das ondas', {
             'fields': (('low_frequency', 'regular_frequency', 'high_frequency'),),
-            'classes': ['collapse']
         }),
     )
 
 admin.site.register(State)
 admin.site.register(City)
 admin.site.register(Spot, SpotAdmin)
+admin.site.register(SpotDetail, SpotDetailAdmin)
 admin.site.register(Post)
 

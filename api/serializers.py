@@ -12,8 +12,15 @@ class VideoSerializer(serializers.ModelSerializer):
         model = Video
         exclude = ('spot',)
 
-class SpotSerializer(serializers.ModelSerializer):
+class SpotDetailSerializer(serializers.ModelSerializer):
     videos = VideoSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = SpotDetail
+        exclude = ('spot',)
+
+class SpotSerializer(serializers.ModelSerializer):
+    details = SpotDetailSerializer(read_only=True, many=False)
 
     class Meta:
         model = Spot

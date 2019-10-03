@@ -29,6 +29,8 @@ class Post(models.Model):
     preview_text = models.CharField(max_length=250, blank=False)
     image = models.ImageField("Imagem")
     created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f'{self.title} - {self.created_at.date()}'
 
 class State(models.Model):
     name = models.CharField("Nome do estado", max_length=100, blank=False)
@@ -56,11 +58,22 @@ class Spot(models.Model):
     # General info
     name = models.CharField("Nome", max_length=100, blank=False)
     city = models.ForeignKey(City, related_name="spots", on_delete=models.CASCADE, verbose_name="Cidade",)
-    header_image = models.ImageField("Imagem principal")
-    info_image = models.ImageField("Imagem lateral")
-    # Coordinates
     lat = models.FloatField("Latitude")
     lng = models.FloatField("Longitude")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Pico"
+        verbose_name_plural = "Picos"
+
+    def __str__(self):
+        return f'{self.name}'
+
+class SpotDetail(models.Model):
+    spot = models.OneToOneField(Spot, related_name="details", on_delete=models.CASCADE, verbose_name="Pico",)
+    # Images
+    header_image = models.ImageField("Imagem principal")
+    info_image = models.ImageField("Imagem lateral")
     # Accessibility
     car = models.BooleanField("Acesso de carro", default=False)
     special_access = models.BooleanField("Acesso especial", default=False)
@@ -113,18 +126,13 @@ class Spot(models.Model):
     shark = models.BooleanField("Tubarões", default=False)
     undertow = models.BooleanField("Ressaca", default=False)
     other_dangers = models.CharField("Outros perigos", max_length=220, default="", blank=True)
-    # 
-    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = "Pico"
-        verbose_name_plural = "Picos"
-
-    def __str__(self):
-        return f'{self.name}'
+        verbose_name = "Pico do DicaSurf"
+        verbose_name_plural = "Picos do DicaSurf"
 
 class Video(models.Model):
-    spot = models.ForeignKey(Spot, related_name="videos", on_delete=models.CASCADE, verbose_name="Pico",)
+    spot = models.ForeignKey(SpotDetail, related_name="videos", on_delete=models.CASCADE, verbose_name="Detalhamento",)
     title = models.CharField("Título breve", max_length=100, blank=False)
     thumb = models.ImageField("Arquivo thumb")
     youtube_url = models.URLField("Link do youtube")

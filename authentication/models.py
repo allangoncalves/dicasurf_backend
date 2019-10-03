@@ -9,7 +9,9 @@ SEX = (
     ('Feminino', 'Feminino')
 )
 
+
 class User(AbstractUser):
+
     username = models.CharField(blank=True, null=True, max_length=50)
     email = models.EmailField(_('email address'), unique=True)
 
@@ -18,6 +20,7 @@ class User(AbstractUser):
 
     def __str__(self):
         return "{}".format(self.email)
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
