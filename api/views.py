@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, pagination
 from rest_framework.permissions import AllowAny
 from api.permissions import IsLoggedInUserOrAdmin, IsAdminUser
 from django.db.models.expressions import RawSQL
@@ -40,7 +40,14 @@ class NearestSpotViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
 class PostViewSet(viewsets.ModelViewSet):
-    serializer_class = PostSerializer
+    serializers = {
+        'list': PostPreviewSerializer,
+        'others': PostSerializer
+    }
+    pagination_class = pagination.LimitOffsetPagination
+    
+    def get_serializer_class(self):
+        return self.serializers.get(self.action, self.serializers['others'])
     
     def get_queryset(self):
         return Post.objects.all().order_by('-created_at')

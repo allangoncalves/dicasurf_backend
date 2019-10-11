@@ -1,10 +1,25 @@
 from rest_framework import serializers
 from api.models import *
 
+class ImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Image
+        fields = "__all__"
+
 class PostSerializer(serializers.ModelSerializer):
+    image = ImageSerializer(many=False, read_only=True)
+
     class Meta:
         model = Post
-        fields = "__all__"
+        exclude = ("preview_image", "preview_text")
+
+class PostPreviewSerializer(serializers.ModelSerializer):
+    preview_image = ImageSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = Post
+        exclude = ('text', 'image')
 
 class VideoSerializer(serializers.ModelSerializer):
 
@@ -14,6 +29,8 @@ class VideoSerializer(serializers.ModelSerializer):
 
 class SpotDetailSerializer(serializers.ModelSerializer):
     videos = VideoSerializer(read_only=True, many=True)
+    header_image = ImageSerializer(many=False, read_only=True)
+    info_image = ImageSerializer(many=False, read_only=True)
 
     class Meta:
         model = SpotDetail

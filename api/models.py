@@ -1,4 +1,5 @@
 from django.db import models
+from sitemanager.models import Image
 
 # Create your models here.
 
@@ -26,9 +27,11 @@ WAVE_STRENGTH = (
 class Post(models.Model):
     title = models.CharField("Título", max_length=140, blank=False)
     text = models.TextField("Texto")
-    preview_text = models.CharField(max_length=250, blank=False)
-    image = models.ImageField("Imagem")
+    preview_text = models.CharField("Texto de preview", max_length=250, blank=False)
+    preview_image = models.ForeignKey(Image, related_name="post_previews", on_delete=models.PROTECT, verbose_name="Imagem de preview",)
+    image = models.ForeignKey(Image, related_name="post_images", on_delete=models.PROTECT, verbose_name="Imagem principal",)
     created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return f'{self.title} - {self.created_at.date()}'
 
@@ -72,8 +75,8 @@ class Spot(models.Model):
 class SpotDetail(models.Model):
     spot = models.OneToOneField(Spot, related_name="details", on_delete=models.CASCADE, verbose_name="Pico",)
     # Images
-    header_image = models.ImageField("Imagem principal")
-    info_image = models.ImageField("Imagem lateral")
+    header_image = models.ForeignKey(Image, related_name="detail_headers", on_delete=models.PROTECT, verbose_name="Imagem principal",)
+    info_image = models.ForeignKey(Image, related_name="detail_infos", on_delete=models.PROTECT, verbose_name="Imagem lateral",)
     # Accessibility
     car = models.BooleanField("Acesso de carro", default=False)
     special_access = models.BooleanField("Acesso especial", default=False)
@@ -134,7 +137,7 @@ class SpotDetail(models.Model):
 class Video(models.Model):
     spot = models.ForeignKey(SpotDetail, related_name="videos", on_delete=models.CASCADE, verbose_name="Detalhamento",)
     title = models.CharField("Título breve", max_length=100, blank=False)
-    thumb = models.ImageField("Arquivo thumb")
+    thumb_image = models.ForeignKey(Image, related_name="videos", on_delete=models.PROTECT, verbose_name="Arquivo thumb",)
     youtube_url = models.URLField("Link do youtube")
     
     class Meta:

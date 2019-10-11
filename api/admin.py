@@ -84,4 +84,5 @@ admin.site.register(City)
 admin.site.register(Spot, SpotAdmin)
 admin.site.register(SpotDetail, SpotDetailAdmin)
 admin.site.register(Post)
+admin.site.register(Image)
 
