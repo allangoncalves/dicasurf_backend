@@ -38,6 +38,8 @@ class Post(models.Model):
 class State(models.Model):
     name = models.CharField("Nome do estado", max_length=100, blank=False)
     abbreviation = models.CharField("Sigla do estado", max_length=2, blank=False)
+    lat = models.FloatField("Latitude")
+    lng = models.FloatField("Longitude")
 
     class Meta:
         verbose_name = "Estado"
@@ -49,13 +51,15 @@ class State(models.Model):
 class City(models.Model):
     name = models.CharField("Nome da cidade", max_length=100, blank=False)
     state = models.ForeignKey(State, related_name="cities", on_delete=models.CASCADE, verbose_name="Estado",)
+    lat = models.FloatField("Latitude")
+    lng = models.FloatField("Longitude")
 
     class Meta:
         verbose_name = "Cidade"
         verbose_name_plural = "Cidades"
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.name}/{self.state.abbreviation}'
 
 class Spot(models.Model):
     # General info
@@ -70,7 +74,7 @@ class Spot(models.Model):
         verbose_name_plural = "Picos"
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.name} - {self.city}'
 
 class SpotDetail(models.Model):
     spot = models.OneToOneField(Spot, related_name="details", on_delete=models.CASCADE, verbose_name="Pico",)
@@ -133,6 +137,9 @@ class SpotDetail(models.Model):
     class Meta:
         verbose_name = "Pico do DicaSurf"
         verbose_name_plural = "Picos do DicaSurf"
+    
+    def __str__(self):
+        return self.spot
 
 class Video(models.Model):
     spot = models.ForeignKey(SpotDetail, related_name="videos", on_delete=models.CASCADE, verbose_name="Detalhamento",)

@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
     'rest_auth',
+    'django_summernote',
 ]
 
 REST_FRAMEWORK = {

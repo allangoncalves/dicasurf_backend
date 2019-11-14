@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django_summernote.admin import SummernoteModelAdmin
 
 # Register your models here.
 
@@ -8,6 +9,9 @@ admin.site.site_header = "DicaSurf Admin"
 
 class VideoInline(admin.StackedInline):
     model = Video
+
+class PostAdmin(SummernoteModelAdmin):
+    pass
 
 class SpotAdmin(admin.ModelAdmin):
     list_filter = ('city__name',)
@@ -83,6 +87,6 @@ admin.site.register(State)
 admin.site.register(City)
 admin.site.register(Spot, SpotAdmin)
 admin.site.register(SpotDetail, SpotDetailAdmin)
-admin.site.register(Post)
+admin.site.register(Post, PostAdmin)
 admin.site.register(Image)
 

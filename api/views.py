@@ -1,4 +1,4 @@
-from rest_framework import viewsets, pagination
+from rest_framework import viewsets, pagination, filters
 from rest_framework.permissions import AllowAny
 from api.permissions import IsLoggedInUserOrAdmin, IsAdminUser
 from django.db.models.expressions import RawSQL
@@ -44,6 +44,8 @@ class PostViewSet(viewsets.ModelViewSet):
         'list': PostPreviewSerializer,
         'others': PostSerializer
     }
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title', 'text', 'preview_text']
     pagination_class = pagination.LimitOffsetPagination
     
     def get_serializer_class(self):
