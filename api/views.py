@@ -1,5 +1,6 @@
 from rest_framework import viewsets, pagination, filters
 from rest_framework.permissions import AllowAny
+from django_filters.rest_framework import DjangoFilterBackend
 from api.permissions import IsLoggedInUserOrAdmin, IsAdminUser
 from django.db.models.expressions import RawSQL
 from api.serializers import *
@@ -63,10 +64,10 @@ class PostViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
 class SpotViewSet(viewsets.ModelViewSet):
-    serializer_class = SpotSerializer
+    serializer_class = SpotDetailSerializer
 
     def get_queryset(self):
-        return Spot.objects.filter(city=self.kwargs['city_pk'])
+        return SpotDetail.objects.filter(spot__city=self.kwargs['city_pk'])
 
     def get_permissions(self):
         permission_classes = []
@@ -78,6 +79,8 @@ class SpotViewSet(viewsets.ModelViewSet):
 
 class CityViewSet(viewsets.ModelViewSet):
     serializer_class = CitySerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['is_visible',]
 
     def get_queryset(self):
         return City.objects.filter(state=self.kwargs['state_pk'])
@@ -93,6 +96,8 @@ class CityViewSet(viewsets.ModelViewSet):
 class StateViewSet(viewsets.ModelViewSet):
     serializer_class = StateSerializer
     queryset = State.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['is_visible',]
 
     def get_permissions(self):
         permission_classes = []
@@ -100,4 +105,4 @@ class StateViewSet(viewsets.ModelViewSet):
             permission_classes = [AllowAny]
         elif self.action == 'create' or self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
             permission_classes = [IsAdminUser]
-        return [permission() for permission in permission_classes] 
+        return [permission() for permission in permission_classes]

@@ -27,9 +27,8 @@ WAVE_STRENGTH = (
 class Post(models.Model):
     title = models.CharField("Título", max_length=140, blank=False)
     text = models.TextField("Texto")
-    preview_text = models.CharField("Texto de preview", max_length=250, blank=False)
+    preview_text = models.TextField("Texto de preview", max_length=450, blank=False)
     preview_image = models.ForeignKey(Image, related_name="post_previews", on_delete=models.PROTECT, verbose_name="Imagem de preview",)
-    image = models.ForeignKey(Image, related_name="post_images", on_delete=models.PROTECT, verbose_name="Imagem principal",)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -38,6 +37,7 @@ class Post(models.Model):
 class State(models.Model):
     name = models.CharField("Nome do estado", max_length=100, blank=False)
     abbreviation = models.CharField("Sigla do estado", max_length=2, blank=False)
+    is_visible = models.BooleanField("Visivel para todos", default=False)
     lat = models.FloatField("Latitude")
     lng = models.FloatField("Longitude")
 
@@ -51,6 +51,7 @@ class State(models.Model):
 class City(models.Model):
     name = models.CharField("Nome da cidade", max_length=100, blank=False)
     state = models.ForeignKey(State, related_name="cities", on_delete=models.CASCADE, verbose_name="Estado",)
+    is_visible = models.BooleanField("Visivel para todos", default=False)
     lat = models.FloatField("Latitude")
     lng = models.FloatField("Longitude")
 
@@ -139,7 +140,7 @@ class SpotDetail(models.Model):
         verbose_name_plural = "Picos do DicaSurf"
     
     def __str__(self):
-        return self.spot
+        return self.spot.name
 
 class Video(models.Model):
     spot = models.ForeignKey(SpotDetail, related_name="videos", on_delete=models.CASCADE, verbose_name="Detalhamento",)
@@ -152,4 +153,4 @@ class Video(models.Model):
         verbose_name_plural = "Vídeos"
 
     def __str__(self):
-        return f'{self.spot.name} - {self.title}'
+        return f'{self.spot} - {self.title}'

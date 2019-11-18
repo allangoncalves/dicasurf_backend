@@ -11,7 +11,7 @@ class VideoInline(admin.StackedInline):
     model = Video
 
 class PostAdmin(SummernoteModelAdmin):
-    pass
+    summernote_fields = '__all__'
 
 class SpotAdmin(admin.ModelAdmin):
     list_filter = ('city__name',)

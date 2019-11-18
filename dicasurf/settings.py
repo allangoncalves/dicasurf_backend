@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'collectfast',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_filters',
     'api',
     'authentication',
     'sitemanager',
@@ -72,6 +73,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated' 
     ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 MIDDLEWARE = [
@@ -153,6 +155,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
+SUMMERNOTE_CONFIG = {
+    'lang': 'pt-BR'
+}
+
+
 LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'UTC'
@@ -163,14 +170,14 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 try:
     from .local_settings import *

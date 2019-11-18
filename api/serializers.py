@@ -19,7 +19,7 @@ class PostPreviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        exclude = ('text', 'image')
+        exclude = ('text',)
 
 class VideoSerializer(serializers.ModelSerializer):
 
@@ -27,21 +27,22 @@ class VideoSerializer(serializers.ModelSerializer):
         model = Video
         exclude = ('spot',)
 
-class SpotDetailSerializer(serializers.ModelSerializer):
-    videos = VideoSerializer(read_only=True, many=True)
-    header_image = ImageSerializer(many=False, read_only=True)
-    info_image = ImageSerializer(many=False, read_only=True)
-
-    class Meta:
-        model = SpotDetail
-        exclude = ('spot',)
-
 class SpotSerializer(serializers.ModelSerializer):
-    details = SpotDetailSerializer(read_only=True, many=False)
 
     class Meta:
         model = Spot
         fields = '__all__'
+
+class SpotDetailSerializer(serializers.ModelSerializer):
+    videos = VideoSerializer(read_only=True, many=True)
+    header_image = ImageSerializer(many=False, read_only=True)
+    info_image = ImageSerializer(many=False, read_only=True)
+    spot = SpotSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = SpotDetail
+        fields = "__all__"
+        # exclude = ('spot',)
 
 class CitySerializer(serializers.ModelSerializer):
 
