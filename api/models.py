@@ -28,7 +28,7 @@ class Post(models.Model):
     title = models.CharField("Título", max_length=140, blank=False)
     text = models.TextField("Texto")
     preview_text = models.TextField("Texto de preview", max_length=450, blank=False)
-    preview_image = models.ForeignKey(Image, related_name="post_previews", on_delete=models.PROTECT, verbose_name="Imagem de preview",)
+    preview_image = models.ForeignKey(Image, related_name="post_previews", on_delete=models.SET_NULL, verbose_name="Imagem de preview", null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -80,8 +80,8 @@ class Spot(models.Model):
 class SpotDetail(models.Model):
     spot = models.OneToOneField(Spot, related_name="details", on_delete=models.CASCADE, verbose_name="Pico",)
     # Images
-    header_image = models.ForeignKey(Image, related_name="detail_headers", on_delete=models.PROTECT, verbose_name="Imagem principal",)
-    info_image = models.ForeignKey(Image, related_name="detail_infos", on_delete=models.PROTECT, verbose_name="Imagem lateral",)
+    header_image = models.ForeignKey(Image, related_name="detail_headers", on_delete=models.SET_NULL, verbose_name="Imagem principal", null=True)
+    info_image = models.ForeignKey(Image, related_name="detail_infos", on_delete=models.SET_NULL, verbose_name="Imagem lateral", null=True)
     # Accessibility
     car = models.BooleanField("Acesso de carro", default=False)
     special_access = models.BooleanField("Acesso especial", default=False)
@@ -145,7 +145,7 @@ class SpotDetail(models.Model):
 class Video(models.Model):
     spot = models.ForeignKey(SpotDetail, related_name="videos", on_delete=models.CASCADE, verbose_name="Detalhamento",)
     title = models.CharField("Título breve", max_length=100, blank=False)
-    thumb_image = models.ForeignKey(Image, related_name="videos", on_delete=models.PROTECT, verbose_name="Arquivo thumb",)
+    thumb_image = models.ForeignKey(Image, related_name="videos", on_delete=models.SET_NULL, verbose_name="Arquivo thumb", null=True)
     youtube_url = models.URLField("Link do youtube")
     
     class Meta:

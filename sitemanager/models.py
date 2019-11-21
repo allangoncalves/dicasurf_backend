@@ -23,7 +23,7 @@ class Slide(models.Model):
     title = models.CharField("Título", max_length=20)
     text = models.CharField("Texto", max_length=140)
     hashtag = models.CharField("Hastag", max_length=20, blank=True)
-    image = models.ForeignKey(Image, related_name="slides", on_delete=models.PROTECT, verbose_name="Imagem de fundo",)
+    image = models.ForeignKey(Image, related_name="slides", on_delete=models.SET_NULL, verbose_name="Imagem de fundo", null=True)
     
     class Meta:
         verbose_name = "Slide"
