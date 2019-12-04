@@ -1,6 +1,12 @@
 from rest_framework import serializers
 from api.models import *
 
+class FirstUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FirstUser
+        fields = '__all__'
+
 class ImageSerializer(serializers.ModelSerializer):
 
     class Meta:

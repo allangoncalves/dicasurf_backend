@@ -24,6 +24,16 @@ WAVE_STRENGTH = (
     ('Suave', 'Suave'),
 )
 
+class FirstUser(models.Model):
+    email = models.EmailField(unique=True)
+
+    class Meta:
+        verbose_name = "Usuario"
+        verbose_name_plural = "Usuarios pre-registrados"
+    
+    def __str__(self):
+        return f'{self.email}'
+
 class Post(models.Model):
     title = models.CharField("Título", max_length=140, blank=False)
     text = models.TextField("Texto")

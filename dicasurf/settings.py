@@ -45,6 +45,8 @@ DEFAULT_FILE_STORAGE = "sitemanager.storages.MediaRootS3Boto3Storage"
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -107,6 +109,12 @@ TEMPLATES = [
     },
 ]
 
+EMAIL_HOST = 'mail.dicasurf.com'
+EMAIL_PORT = 26
+EMAIL_HOST_USER = 'social@dicasurf.com'
+EMAIL_HOST_PASSWORD = 'surf.rider-2019'
+EMAIL_USE_TLS = False
+
 WSGI_APPLICATION = 'dicasurf.wsgi.application'
 
 
@@ -124,7 +132,7 @@ JWT_AUTH = {
 
     # This is an instance of Python's datetime.timedelta. This will be added to datetime.utcnow() to set the expiration time.
     # Default is datetime.timedelta(seconds=300)(5 minutes).
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=1),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=24),
 
     'JWT_ALLOW_REFRESH': True,
     'JWT_AUTH_HEADER_PREFIX': 'JWT',

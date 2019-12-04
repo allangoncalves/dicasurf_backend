@@ -6,7 +6,10 @@ from django.db.models.expressions import RawSQL
 from api.serializers import *
 
 # Create your views here.
-    
+
+class FirstUserViewSet(viewsets.ModelViewSet):
+    serializer_class = FirstUserSerializer
+    queryset = FirstUser.objects.all()
     
 class NearestSpotViewSet(viewsets.ModelViewSet):
     serializer_class = SpotAndCitySerializer
