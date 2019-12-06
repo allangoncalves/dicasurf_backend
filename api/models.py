@@ -33,14 +33,14 @@ PARTNERSHIP = (
 
 class PossiblePartner(models.Model):
     email = models.EmailField()
-    choice = models.CharField(max_length=15, choices=PARTNERSHIP, null=False, blank=False)
+    choice = models.CharField("Plano", max_length=15, choices=PARTNERSHIP, null=False, blank=False)
 
     class Meta:
         verbose_name = "Usuario"
         verbose_name_plural = "Possiveis Parceiros"
     
     def __str__(self):
-        return f'{self.email} - {self.choice}'
+        return f'{self.email}'
 
 class FirstUser(models.Model):
     email = models.EmailField(unique=True)

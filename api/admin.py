@@ -7,6 +7,13 @@ from api.models import *
 
 admin.site.site_header = "DicaSurf Admin"
 
+class PossiblePartnerAdmin(admin.ModelAdmin):
+    list_filter = ('choice',)
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.distinct('email', 'choice')
+
 class VideoInline(admin.StackedInline):
     model = Video
 
@@ -90,4 +97,5 @@ admin.site.register(SpotDetail, SpotDetailAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Image)
 admin.site.register(FirstUser)
+admin.site.register(PossiblePartner, PossiblePartnerAdmin)
 
