@@ -7,6 +7,18 @@ from api.serializers import *
 
 # Create your views here.
 
+class PossiblePartnerViewSet(viewsets.ModelViewSet):
+    serializer_class = PossiblePartnerSerializer
+    queryset = PossiblePartner.objects.all()
+
+    def get_permissions(self):
+        permission_classes = []
+        if self.action == 'create':
+            permission_classes = [AllowAny]
+        elif self.action == 'retrieve' or self.action == 'list' or self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
+
 class FirstUserViewSet(viewsets.ModelViewSet):
     serializer_class = FirstUserSerializer
     queryset = FirstUser.objects.all()
@@ -78,7 +90,7 @@ class SpotViewSet(viewsets.ModelViewSet):
     serializer_class = SpotDetailSerializer
 
     def get_queryset(self):
-        return SpotDetail.objects.filter(spot__city=self.kwargs['city_pk'])
+        return SpotDetail.objects.filter(spot__city=self.kwargs['city_pk']).order_by('spot__name')
 
     def get_permissions(self):
         permission_classes = []
@@ -94,7 +106,7 @@ class CityViewSet(viewsets.ModelViewSet):
     filterset_fields = ['is_visible',]
 
     def get_queryset(self):
-        return City.objects.filter(state=self.kwargs['state_pk'])
+        return City.objects.filter(state=self.kwargs['state_pk']).order_by('name')
 
     def get_permissions(self):
         permission_classes = []
@@ -106,9 +118,11 @@ class CityViewSet(viewsets.ModelViewSet):
 
 class StateViewSet(viewsets.ModelViewSet):
     serializer_class = StateSerializer
-    queryset = State.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['is_visible',]
+
+    def get_queryset(self):
+        return State.objects.all().order_by('name')
 
     def get_permissions(self):
         permission_classes = []

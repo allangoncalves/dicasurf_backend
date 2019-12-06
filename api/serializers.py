@@ -1,6 +1,12 @@
 from rest_framework import serializers
 from api.models import *
 
+class PossiblePartnerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PossiblePartner
+        fields = '__all__'
+
 class FirstUserSerializer(serializers.ModelSerializer):
 
     class Meta:

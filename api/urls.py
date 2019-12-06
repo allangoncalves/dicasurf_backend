@@ -1,11 +1,12 @@
 from django.conf.urls import url, include
 from rest_framework_nested import routers
 from rest_framework.routers import SimpleRouter
-from api.views import CityViewSet, SpotViewSet, StateViewSet, NearestSpotViewSet, PostViewSet, FirstUserViewSet
+from api.views import CityViewSet, SpotViewSet, StateViewSet, NearestSpotViewSet, PostViewSet, FirstUserViewSet, PossiblePartnerViewSet
 
 router = SimpleRouter()
 router.register(r'firstusers', FirstUserViewSet)
-router.register(r'states', StateViewSet)
+router.register(r'possiblepartners', PossiblePartnerViewSet)
+router.register(r'states', StateViewSet, base_name="states")
 router.register(r'posts', PostViewSet, base_name="posts")
 router.register(r'nearest', NearestSpotViewSet, base_name="nearest")
 

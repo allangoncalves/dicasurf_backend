@@ -24,6 +24,24 @@ WAVE_STRENGTH = (
     ('Suave', 'Suave'),
 )
 
+PARTNERSHIP = (
+    (1, 'Sunrise'),
+    (2, 'Big Rider'),
+    (3, 'Rosa dos Ventos'),
+    (4, 'Adesão Anual'),
+)
+
+class PossiblePartner(models.Model):
+    email = models.EmailField()
+    choice = models.CharField(max_length=15, choices=PARTNERSHIP, null=False, blank=False)
+
+    class Meta:
+        verbose_name = "Usuario"
+        verbose_name_plural = "Possiveis Parceiros"
+    
+    def __str__(self):
+        return f'{self.email} - {self.choice}'
+
 class FirstUser(models.Model):
     email = models.EmailField(unique=True)
 
