@@ -47,7 +47,7 @@ class FirstUser(models.Model):
 
     class Meta:
         verbose_name = "Usuario"
-        verbose_name_plural = "Usuarios pre-registrados"
+        verbose_name_plural = "Usuarios pre-registrados (Loja)"
     
     def __str__(self):
         return f'{self.email}'
