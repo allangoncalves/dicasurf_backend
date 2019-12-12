@@ -16,3 +16,27 @@ class HomePageViewSet(viewsets.ModelViewSet):
         elif self.action == 'create' or self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
+
+class PartnerViewSet(viewsets.ModelViewSet):
+    serializer_class = PartnerPageSerializer
+    queryset = PartnerPage.objects.all()
+
+    def get_permissions(self):
+        permission_classes = []
+        if self.action == 'retrieve' or self.action == 'list':
+            permission_classes = [AllowAny]
+        elif self.action == 'create' or self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
+
+class WhoWeAreViewSet(viewsets.ModelViewSet):
+    serializer_class = WhoWeArePageSerializer
+    queryset = WhoWeArePage.objects.all()
+
+    def get_permissions(self):
+        permission_classes = []
+        if self.action == 'retrieve' or self.action == 'list':
+            permission_classes = [AllowAny]
+        elif self.action == 'create' or self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]

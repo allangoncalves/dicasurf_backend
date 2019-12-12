@@ -10,4 +10,18 @@ class CarouselInline(admin.StackedInline):
 class HomeAdmin(admin.ModelAdmin):
     inlines = [CarouselInline]
 
+class PartnerInline(admin.StackedInline):
+    model = PartnerSlide
+
+class PartnerAdmin(admin.ModelAdmin):
+    inlines = [PartnerInline]
+
+class WhoWeAreInline(admin.StackedInline):
+    model = WhoWeAreSlide
+
+class WhoWeAreAdmin(admin.ModelAdmin):
+    inlines = [WhoWeAreInline]
+
 admin.site.register(HomePage, HomeAdmin)
+admin.site.register(PartnerPage, PartnerAdmin)
+admin.site.register(WhoWeArePage, WhoWeAreAdmin)
