@@ -37,6 +37,7 @@ class Image(models.Model):
 
 class PartnerSlide(models.Model):
     page = models.ForeignKey(PartnerPage, related_name="carousel", on_delete=models.CASCADE,)
+    title = models.CharField(max_length=150, null=False, blank=False)
     video_url = models.CharField(max_length=255, null=False, blank=False)
 
     class Meta:
@@ -48,6 +49,7 @@ class PartnerSlide(models.Model):
 
 class WhoWeAreSlide(models.Model):
     page = models.ForeignKey(WhoWeArePage, related_name="carousel", on_delete=models.CASCADE,)
+    title = models.CharField(max_length=150, null=False, blank=False)
     video_url = models.CharField(max_length=255, null=False, blank=False)
 
     class Meta:
