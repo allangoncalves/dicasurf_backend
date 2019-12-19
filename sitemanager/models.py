@@ -35,6 +35,30 @@ class Image(models.Model):
     def __str__(self):
         return f'{self.title}'
 
+class SphereImage(models.Model):
+    title = models.CharField("Título", max_length=30, unique=True)
+    image = models.ImageField("Imagem")
+    thumb = models.ImageField("Thumb")
+
+    class Meta:
+        verbose_name = "Imagem 360"
+        verbose_name_plural = "Imagens 360"
+
+    def __str__(self):
+        return f'{self.title}'
+
+class SphereVideo(models.Model):
+    title = models.CharField("Título", max_length=30, unique=True)
+    url = models.URLField("Link do youtube")
+    thumb = models.ImageField("Thumb", null=True)
+
+    class Meta:
+        verbose_name = "Video 360"
+        verbose_name_plural = "Videos 360"
+
+    def __str__(self):
+        return f'{self.title}'
+
 class PartnerSlide(models.Model):
     page = models.ForeignKey(PartnerPage, related_name="carousel", on_delete=models.CASCADE,)
     title = models.CharField(max_length=150, null=False, blank=False)

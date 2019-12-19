@@ -25,3 +25,5 @@ class WhoWeAreAdmin(admin.ModelAdmin):
 admin.site.register(HomePage, HomeAdmin)
 admin.site.register(PartnerPage, PartnerAdmin)
 admin.site.register(WhoWeArePage, WhoWeAreAdmin)
+admin.site.register(SphereImage)
+admin.site.register(Image)

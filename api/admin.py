@@ -38,7 +38,7 @@ class SpotDetailAdmin(admin.ModelAdmin):
             'fields': ('spot',),
         }),
         ('Imagens para a pagina.', {
-            'fields': ('header_image', 'info_image'),
+            'fields': ('header_image', 'pictures_gallery', 'videos_gallery'),
         }),
         ('Acessibilidade', {
             'fields': ('beach_type', ('car', 'special_access')),
@@ -91,7 +91,8 @@ admin.site.register(City)
 admin.site.register(Spot, SpotAdmin)
 admin.site.register(SpotDetail, SpotDetailAdmin)
 admin.site.register(Post, PostAdmin)
-admin.site.register(Image)
 admin.site.register(FirstUser)
+admin.site.register(ImageGrid)
+admin.site.register(VideoGrid)
 admin.site.register(PossiblePartner, PossiblePartnerAdmin)
 

@@ -13,6 +13,43 @@ class FirstUserSerializer(serializers.ModelSerializer):
         model = FirstUser
         fields = '__all__'
 
+class SphereVideoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SphereVideo
+        fields = '__all__'
+
+class SphereImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SphereImage
+        fields = '__all__'
+
+class VideoGridSerializer(serializers.ModelSerializer):
+    video_one = SphereVideoSerializer(many=False, read_only=True)
+    video_two = SphereVideoSerializer(many=False, read_only=True)
+    video_three = SphereVideoSerializer(many=False, read_only=True)
+    video_four = SphereVideoSerializer(many=False, read_only=True)
+    video_five = SphereVideoSerializer(many=False, read_only=True)
+    video_six = SphereVideoSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = VideoGrid
+        exclude = ('spot',)
+
+class ImageGridSerializer(serializers.ModelSerializer):
+    image_one = SphereImageSerializer(many=False, read_only=True)
+    image_two = SphereImageSerializer(many=False, read_only=True)
+    image_three = SphereImageSerializer(many=False, read_only=True)
+    image_four = SphereImageSerializer(many=False, read_only=True)
+    image_five = SphereImageSerializer(many=False, read_only=True)
+    image_six = SphereImageSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = ImageGrid
+        exclude = ('spot',)
+    
+
 class ImageSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -48,7 +85,10 @@ class SpotSerializer(serializers.ModelSerializer):
 class SpotDetailSerializer(serializers.ModelSerializer):
     videos = VideoSerializer(read_only=True, many=True)
     header_image = ImageSerializer(many=False, read_only=True)
-    info_image = ImageSerializer(many=False, read_only=True)
+    pictures_gallery = ImageSerializer(many=False, read_only=True)
+    videos_gallery = ImageSerializer(many=False, read_only=True)
+    image_panel = ImageGridSerializer(many=True, read_only=True)
+    video_panel = VideoGridSerializer(many=True, read_only=True)
     spot = SpotSerializer(many=False, read_only=True)
 
     class Meta:

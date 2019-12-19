@@ -1,5 +1,5 @@
 from django.db import models
-from sitemanager.models import Image
+from sitemanager.models import Image, SphereImage, SphereVideo
 
 # Create your models here.
 
@@ -65,7 +65,7 @@ class Post(models.Model):
 class State(models.Model):
     name = models.CharField("Nome do estado", max_length=100, blank=False)
     abbreviation = models.CharField("Sigla do estado", max_length=2, blank=False)
-    is_visible = models.BooleanField("Visivel para todos", default=False)
+    is_visible = models.BooleanField("Visivel para todo o site", default=False)
     lat = models.FloatField("Latitude")
     lng = models.FloatField("Longitude")
 
@@ -79,7 +79,7 @@ class State(models.Model):
 class City(models.Model):
     name = models.CharField("Nome da cidade", max_length=100, blank=False)
     state = models.ForeignKey(State, related_name="cities", on_delete=models.CASCADE, verbose_name="Estado",)
-    is_visible = models.BooleanField("Visivel para todos", default=False)
+    is_visible = models.BooleanField("Visivel para todo o site", default=False)
     lat = models.FloatField("Latitude")
     lng = models.FloatField("Longitude")
 
@@ -109,7 +109,8 @@ class SpotDetail(models.Model):
     spot = models.OneToOneField(Spot, related_name="details", on_delete=models.CASCADE, verbose_name="Pico",)
     # Images
     header_image = models.ForeignKey(Image, related_name="detail_headers", on_delete=models.SET_NULL, verbose_name="Imagem principal", null=True)
-    info_image = models.ForeignKey(Image, related_name="detail_infos", on_delete=models.SET_NULL, verbose_name="Imagem lateral", null=True)
+    pictures_gallery = models.ForeignKey(Image, related_name="pictures_gallery", on_delete=models.SET_NULL, verbose_name="Imagem para a galeria de fotos 360", null=True)
+    videos_gallery = models.ForeignKey(Image, related_name="videos_gallery", on_delete=models.SET_NULL, verbose_name="Imagem para a galeria de videos 360", null=True)
     # Accessibility
     car = models.BooleanField("Acesso de carro", default=False)
     special_access = models.BooleanField("Acesso especial", default=False)
@@ -182,3 +183,35 @@ class Video(models.Model):
 
     def __str__(self):
         return f'{self.spot} - {self.title}'
+
+class ImageGrid(models.Model):
+    spot = models.ForeignKey(SpotDetail, related_name="image_panel", on_delete=models.CASCADE, verbose_name="Pico",)
+    image_one = models.ForeignKey(SphereImage, related_name="image_one", on_delete=models.SET_NULL, verbose_name="Imagem 1", null=True, blank=True)
+    image_two = models.ForeignKey(SphereImage, related_name="image_two", on_delete=models.SET_NULL, verbose_name="Imagem 2", null=True, blank=True)
+    image_three = models.ForeignKey(SphereImage, related_name="image_three", on_delete=models.SET_NULL, verbose_name="Imagem 3", null=True, blank=True)
+    image_four = models.ForeignKey(SphereImage, related_name="image_four", on_delete=models.SET_NULL, verbose_name="Imagem 4", null=True, blank=True)
+    image_five = models.ForeignKey(SphereImage, related_name="image_five", on_delete=models.SET_NULL, verbose_name="Imagem 5", null=True, blank=True)
+    image_six = models.ForeignKey(SphereImage, related_name="image_six", on_delete=models.SET_NULL, verbose_name="Imagem 6", null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Grid 360 (Imagem)"
+        verbose_name_plural = "Grids (Imagem)"
+
+    def __str__(self):
+        return f'Grid {self.id}'
+
+class VideoGrid(models.Model):
+    spot = models.ForeignKey(SpotDetail, related_name="video_panel", on_delete=models.CASCADE, verbose_name="Pico",)
+    video_one = models.ForeignKey(SphereVideo, related_name="video_one", on_delete=models.SET_NULL, verbose_name="Video 1", null=True, blank=True)
+    video_two = models.ForeignKey(SphereVideo, related_name="video_two", on_delete=models.SET_NULL, verbose_name="Video 2", null=True, blank=True)
+    video_three = models.ForeignKey(SphereVideo, related_name="video_three", on_delete=models.SET_NULL, verbose_name="Video 3", null=True, blank=True)
+    video_four = models.ForeignKey(SphereVideo, related_name="video_four", on_delete=models.SET_NULL, verbose_name="Video 4", null=True, blank=True)
+    video_five = models.ForeignKey(SphereVideo, related_name="video_five", on_delete=models.SET_NULL, verbose_name="Video 5", null=True, blank=True)
+    video_six = models.ForeignKey(SphereVideo, related_name="video_six", on_delete=models.SET_NULL, verbose_name="Video 6", null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Grid 360 (Video)"
+        verbose_name_plural = "Grids (Video)"
+
+    def __str__(self):
+        return f'Grid {self.id}'
