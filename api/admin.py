@@ -10,6 +10,12 @@ admin.site.site_header = "DicaSurf Admin"
 class PossiblePartnerAdmin(admin.ModelAdmin):
     list_filter = ('choice',)
 
+class ImageGridInline(admin.TabularInline):
+    model = ImageGrid
+
+class VideoGridInline(admin.TabularInline):
+    model = VideoGrid
+
 class VideoInline(admin.StackedInline):
     model = Video
 
@@ -32,13 +38,13 @@ class SpotAdmin(admin.ModelAdmin):
     )
 
 class SpotDetailAdmin(admin.ModelAdmin):
-    inlines = [VideoInline]
+    inlines = [VideoInline, ImageGridInline, VideoGridInline]
     fieldsets = (
         ('Pico', {
             'fields': ('spot',),
         }),
         ('Imagens para a pagina.', {
-            'fields': ('header_image', 'pictures_gallery', 'videos_gallery'),
+            'fields': ('header_image', 'pictures_gallery', 'videos_gallery',),
         }),
         ('Acessibilidade', {
             'fields': ('beach_type', ('car', 'special_access')),

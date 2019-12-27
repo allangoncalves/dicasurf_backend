@@ -185,6 +185,7 @@ class Video(models.Model):
         return f'{self.spot} - {self.title}'
 
 class ImageGrid(models.Model):
+    name = models.CharField("Nome", max_length=100, blank=False)
     spot = models.ForeignKey(SpotDetail, related_name="image_panel", on_delete=models.CASCADE, verbose_name="Pico",)
     image_one = models.ForeignKey(SphereImage, related_name="image_one", on_delete=models.SET_NULL, verbose_name="Imagem 1", null=True, blank=True)
     image_two = models.ForeignKey(SphereImage, related_name="image_two", on_delete=models.SET_NULL, verbose_name="Imagem 2", null=True, blank=True)
@@ -195,12 +196,13 @@ class ImageGrid(models.Model):
 
     class Meta:
         verbose_name = "Grid 360 (Imagem)"
-        verbose_name_plural = "Grids (Imagem)"
+        verbose_name_plural = "Grids 360 (Imagem)"
 
     def __str__(self):
-        return f'Grid {self.id}'
+        return f'{self.name}'
 
 class VideoGrid(models.Model):
+    name = models.CharField("Nome", max_length=100, blank=False)
     spot = models.ForeignKey(SpotDetail, related_name="video_panel", on_delete=models.CASCADE, verbose_name="Pico",)
     video_one = models.ForeignKey(SphereVideo, related_name="video_one", on_delete=models.SET_NULL, verbose_name="Video 1", null=True, blank=True)
     video_two = models.ForeignKey(SphereVideo, related_name="video_two", on_delete=models.SET_NULL, verbose_name="Video 2", null=True, blank=True)
@@ -211,7 +213,7 @@ class VideoGrid(models.Model):
 
     class Meta:
         verbose_name = "Grid 360 (Video)"
-        verbose_name_plural = "Grids (Video)"
+        verbose_name_plural = "Grids 360 (Video)"
 
     def __str__(self):
-        return f'Grid {self.id}'
+        return f'{self.name}'
