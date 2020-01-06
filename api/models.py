@@ -174,7 +174,6 @@ class SpotDetail(models.Model):
 class Video(models.Model):
     spot = models.ForeignKey(SpotDetail, related_name="videos", on_delete=models.CASCADE, verbose_name="Detalhamento",)
     title = models.CharField("Título breve", max_length=100, blank=False)
-    thumb_image = models.ForeignKey(Image, related_name="videos", on_delete=models.SET_NULL, verbose_name="Arquivo thumb", null=True)
     youtube_url = models.URLField("Link do youtube")
     
     class Meta:
@@ -185,7 +184,7 @@ class Video(models.Model):
         return f'{self.spot} - {self.title}'
 
 class ImageGrid(models.Model):
-    name = models.CharField("Nome", max_length=100, blank=False)
+    name = models.CharField("Nome", max_length=100, blank=True)
     spot = models.ForeignKey(SpotDetail, related_name="image_panel", on_delete=models.CASCADE, verbose_name="Pico",)
     image_one = models.ForeignKey(SphereImage, related_name="image_one", on_delete=models.SET_NULL, verbose_name="Imagem 1", null=True, blank=True)
     image_two = models.ForeignKey(SphereImage, related_name="image_two", on_delete=models.SET_NULL, verbose_name="Imagem 2", null=True, blank=True)
@@ -202,7 +201,7 @@ class ImageGrid(models.Model):
         return f'{self.name}'
 
 class VideoGrid(models.Model):
-    name = models.CharField("Nome", max_length=100, blank=False)
+    name = models.CharField("Nome", max_length=100, blank=True)
     spot = models.ForeignKey(SpotDetail, related_name="video_panel", on_delete=models.CASCADE, verbose_name="Pico",)
     video_one = models.ForeignKey(SphereVideo, related_name="video_one", on_delete=models.SET_NULL, verbose_name="Video 1", null=True, blank=True)
     video_two = models.ForeignKey(SphereVideo, related_name="video_two", on_delete=models.SET_NULL, verbose_name="Video 2", null=True, blank=True)
