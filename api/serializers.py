@@ -97,11 +97,11 @@ class SpotDetailSerializer(serializers.ModelSerializer):
         # exclude = ('spot',)
 
     def get_image_panel(self, instance):
-        panels = instance.image_panel.all().order_by('-id')
+        panels = instance.image_panel.all().order_by('id')
         return ImageGridSerializer(panels, many=True).data
 
     def get_video_panel(self, instance):
-        panels = instance.video_panel.all().order_by('-id')
+        panels = instance.video_panel.all().order_by('id')
         return ImageGridSerializer(panels, many=True).data
 
 class CitySerializer(serializers.ModelSerializer):
