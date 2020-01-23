@@ -1,5 +1,7 @@
 from django.db import models
 from sitemanager.models import Image, SphereImage, SphereVideo
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 
@@ -54,8 +56,8 @@ class FirstUser(models.Model):
 
 class Post(models.Model):
     title = models.CharField("Título", max_length=140, blank=False)
-    text = models.TextField("Texto")
-    preview_text = models.TextField("Texto de preview", max_length=450, blank=False)
+    text = RichTextUploadingField("Texto", config_name="default")
+    preview_text = RichTextField("Texto de preview", max_length=450, blank=False, config_name="default")
     preview_image = models.ForeignKey(Image, related_name="post_previews", on_delete=models.SET_NULL, verbose_name="Imagem de preview", null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

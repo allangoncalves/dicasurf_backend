@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('sitemanager.urls')),
     re_path(r'', include('django.contrib.auth.urls')),
     re_path(r'^summernote/', include('django_summernote.urls')),
+    re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

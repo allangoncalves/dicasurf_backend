@@ -66,6 +66,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     'django_summernote',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 REST_FRAMEWORK = {
@@ -169,6 +171,14 @@ SUMMERNOTE_CONFIG = {
     'lang': 'pt-BR'
 }
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'language': 'pt_BR',
+        'extraPlugins': ','.join([ 'uploadimage', 'iframe', 'iframedialog',]),
+    }
+}
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 LANGUAGE_CODE = 'pt-br'
 
