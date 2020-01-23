@@ -108,9 +108,9 @@ class Spot(models.Model):
 class SpotDetail(models.Model):
     spot = models.OneToOneField(Spot, related_name="details", on_delete=models.CASCADE, verbose_name="Pico",)
     # Images
-    header_image = models.ForeignKey(Image, related_name="detail_headers", on_delete=models.SET_NULL, verbose_name="Imagem principal", null=True)
-    pictures_gallery = models.ForeignKey(Image, related_name="pictures_gallery", on_delete=models.SET_NULL, verbose_name="Imagem para a galeria de fotos 360", null=True)
-    videos_gallery = models.ForeignKey(Image, related_name="videos_gallery", on_delete=models.SET_NULL, verbose_name="Imagem para a galeria de videos 360", null=True)
+    header_image = models.ForeignKey(Image, related_name="detail_headers", on_delete=models.SET_NULL, verbose_name="Imagem principal", null=True, blank=True)
+    pictures_gallery = models.ForeignKey(Image, related_name="pictures_gallery", on_delete=models.SET_NULL, verbose_name="Imagem para a galeria de fotos 360", null=True, blank=True)
+    videos_gallery = models.ForeignKey(Image, related_name="videos_gallery", on_delete=models.SET_NULL, verbose_name="Imagem para a galeria de videos 360", null=True, blank=True)
     # Accessibility
     car = models.BooleanField("Acesso de carro", default=False)
     special_access = models.BooleanField("Acesso especial", default=False)
