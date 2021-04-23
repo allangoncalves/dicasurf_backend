@@ -109,10 +109,10 @@ TEMPLATES = [
     },
 ]
 
-EMAIL_HOST = 'mail.dicasurf.com'
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = 26
-EMAIL_HOST_USER = 'social@dicasurf.com'
-EMAIL_HOST_PASSWORD = 'surf.rider-2019'
+EMAIL_HOST_USER = os.environ.get('SOCIA_EMAIL')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PW')
 EMAIL_USE_TLS = False
 
 WSGI_APPLICATION = 'dicasurf.wsgi.application'
